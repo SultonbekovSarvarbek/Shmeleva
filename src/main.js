@@ -1,20 +1,20 @@
-import Vue from 'vue'
-import App from './App.vue'
+import Vue from 'vue';
+import App from './App.vue';
 import router from './router';
-import vmodal from 'vue-js-modal'
-import Sticky from 'vue-sticky-directive'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import VueAnimate from 'vue-animate-scroll'
-import VueScrollTo from 'vue-scrollto'
+import vmodal from 'vue-js-modal';
+import Sticky from 'vue-sticky-directive';
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import VueAnimate from 'vue-animate-scroll';
+import VueScrollTo from 'vue-scrollto';
 import VueWindowSize from 'vue-window-size';
 Vue.use(VueWindowSize);
-Vue.use(vmodal)
-Vue.use(Sticky)
-Vue.use(VueAnimate)
+Vue.use(vmodal);
+Vue.use(Sticky);
+Vue.use(VueAnimate);
 Vue.use(VueScrollTo, {
-  container: "body",
+  container: 'body',
   duration: 500,
-  easing: "ease",
+  easing: 'ease',
   offset: 0,
   force: true,
   cancelable: true,
@@ -22,13 +22,13 @@ Vue.use(VueScrollTo, {
   onDone: false,
   onCancel: false,
   x: false,
-  y: true
-})
-import 'swiper/css/swiper.css'
+  y: true,
+});
+import 'swiper/css/swiper.css';
 
-Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
- 
+Vue.use(VueAwesomeSwiper);
+
 new Vue({
   router,
-  render: h => h(App)
+  render: (h) => h(App),
 }).$mount('#app');

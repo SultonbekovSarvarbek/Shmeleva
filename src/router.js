@@ -8,10 +8,6 @@ import Contacts from './pages/contacts.vue';
 import Detail1 from './pages/detail-1.vue';
 import Detail2 from './pages/detail-2.vue';
 import Detail3 from './pages/detail-3.vue';
-
-
-
-
 Vue.use(Router);
 let router = new Router({
   mode: 'history',
@@ -19,38 +15,36 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      component: Home
+      component: Home,
     },
     {
       path: '/bio',
-      component: Bio
+      component: Bio,
     },
     {
       path: '/contacts',
-      component: Contacts
+      component: Contacts,
     },
     {
       path: '/services',
-      component: Services
+      component: Services,
     },
     {
       path: '/detail',
-      component: Detail
+      component: Detail,
     },
     {
       path: '/detail-1',
-      component: Detail1
+      component: Detail1,
     },
     {
       path: '/detail-2',
-      component: Detail2
+      component: Detail2,
     },
     {
       path: '/detail-3',
-      component: Detail3
-    }
-
-    
-  ]
-})
-export default router
+      component: Detail3,
+    },
+  ],
+});
+export default router;
