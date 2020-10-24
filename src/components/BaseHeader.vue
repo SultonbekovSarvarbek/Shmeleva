@@ -1,51 +1,64 @@
 <template>
-  <header class="header">
-    <div class="container header__wrap">
-      <a class="header__logo" href="/">
-        <div class="icon">
-          <img :src="require('@/assets/img/logo.jpg')" alt="" />
-        </div>
-        <div class="header__logo-text">
-          <span class="header__logo-name">Адвокаты Шмелевы</span>
-          <span class="header__logo-desc"
-            >Семейная династия защитников в сфере права</span
-          >
-        </div>
-      </a>
-      <ul class="header__menu">
-        <li class="header__menu-item">
-          <router-link to="/" class="header__menu-link"> Главная </router-link>
-        </li>
-        <li class="header__menu-item">
-          <router-link to="/bio" class="header__menu-link">
-            Биография
-          </router-link>
-        </li>
-        <li class="header__menu-item">
-          <router-link to="/services" class="header__menu-link">
-            Услуги адваоката
-          </router-link>
-        </li>
-        <li class="header__menu-item">
-          <router-link to="/" class="header__menu-link">
-            Новости и статьи
-          </router-link>
-        </li>
-        <li class="header__menu-item">
-          <router-link to="/contacts" class="header__menu-link"
-            >Контакты
-          </router-link>
-        </li>
+  <div>
+    <!-- mobilenav -->
+    <mobilenav @clicked="closeNav" :class="{ mobnavactive: isBurgerActive }" />
 
-        <li class="header__info-menu" v-if="windowWidth < 992">
+    <header class="header">
+      <div class="container header__wrap">
+        <router-link class="header__logo" to="/">
+          <div class="icon">
+            <img :src="require('@/assets/img/logo.jpg')" alt="" />
+          </div>
+          <div class="header__logo-text">
+            <span class="header__logo-name">Адвокаты Шмелевы</span>
+            <span class="header__logo-desc"
+              >Семейная династия защитников в сфере права</span
+            >
+          </div>
+        </router-link>
+        <ul class="header__menu">
+          <li
+            class="header__menu-item"
+            @click="scrollToTop"
+            v-for="itemlink in headerslink"
+            :key="itemlink.id"
+          >
+            <router-link :to="`${itemlink.link}`" class="header__menu-link">
+              {{ itemlink.name }}
+            </router-link>
+          </li>
+
+          <!-- <li class="header__info-menu" v-if="windowWidth < 992">
           <p class="header__info-phone">+7 (495) 000 00 00</p>
           <div class="footer__text">
             г. Москва, наб. канала Грибоедова, д. 41
           </div>
           <div class="footer__text">info@lawer.com</div>
-        </li>
-      </ul>
-      <div class="header__info">
+        </li> -->
+        </ul>
+        <div class="header__info">
+          <p>84 951 288 882</p>
+          <span>
+            <Icon name="telephone" />
+          </span>
+        </div>
+        <!-- menuicon -->
+        <div class="burger-menu">
+          <div
+            id="burger"
+            :class="{ active: isBurgerActive }"
+            @click.prevent="toggle"
+          >
+            <slot>
+              <button type="button" class="burger-button" title="Menu">
+                <span class="burger-bar burger-bar--1"></span>
+                <span class="burger-bar burger-bar--2"></span>
+                <span class="burger-bar burger-bar--3"></span>
+              </button>
+            </slot>
+          </div>
+        </div>
+        <!-- <div class="header__info">
         <p class="header__info-phone">+7 (495) 000 00 00</p>
         <Icon name="telephone" />
         <template v-if="windowWidth < 992">
@@ -53,22 +66,49 @@
             <Icon name="menu" />
           </div>
         </template>
+      </div> -->
       </div>
-    </div>
-  </header>
+    </header>
+  </div>
 </template>
 
 <script>
 import Icon from "@/components/Icon/Icon.vue";
+import mobilenav from "./menumobile";
 export default {
   name: "baseHeader",
-  components: {
-    Icon,
-  },
   data() {
     return {
+      isBurgerActive: false,
+
       isVisibleMobMenu: false,
+      headerslink: [
+        {
+          name: "Главная",
+          link: "/",
+        },
+        {
+          name: "Биография",
+          link: "/bio",
+        },
+        {
+          name: "Услуги адвокатов",
+          link: "/services",
+        },
+        {
+          name: "Новости и статьи",
+          link: "/",
+        },
+        {
+          name: "Контакты",
+          link: "/contacts",
+        },
+      ],
     };
+  },
+  components: {
+    Icon,
+    mobilenav,
   },
   methods: {
     // Открытие/зактытие моб меню
@@ -77,6 +117,12 @@ export default {
       body.classList.toggle("open-modal-menu");
       this.isVisibleMobMenu = !this.isVisibleMobMenu;
     },
+    toggle() {
+      this.isBurgerActive = !this.isBurgerActive;
+    },
+    closeNav(val) {
+      this.isBurgerActive = val;
+    },
   },
 };
 </script>
@@ -84,167 +130,88 @@ export default {
 <style lang="scss" >
 @import "~assets/scss/config";
 @import "~assets/scss/mixins";
+@import "~assets/scss/headerstyle";
+@import "~assets/scss/mobilestyle";
 
-.header {
-  background: #ffffff 0% 0% no-repeat padding-box;
-  padding: 20px 0;
-  box-shadow: 0px 4px 6px #00000029;
-
-  &__logo {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #262626;
-
-    .icon {
-      width: 35px;
-      img {
-        max-width: 100%;
-      }
-    }
-
-    &-text {
-      margin-left: 15px;
-    }
-
-    &-name {
-      font-size: 18px;
-      line-height: 23px;
-      font-weight: 500;
-      letter-spacing: 0px;
-      color: #262626;
-      display: block;
-      margin-bottom: 2px;
-
-      @include respond-to(lg) {
-        font-size: 16px;
-      }
-    }
-
-    &-desc {
-      text-align: left;
-      font-weight: 400;
-      font-size: 6px;
-      line-height: 7px;
-      color: #262626;
-      display: block;
-    }
-  }
-
-  &__wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  &__burger {
-    margin-left: 20px;
-  }
-
-  &__menu {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    list-style: none;
-
-    &-item {
-      padding-right: 32px;
-
-      &:last-child {
-        padding-right: 0;
-      }
-    }
-    .header__info-menu {
-      margin-top: auto;
-      position: absolute;
-      bottom: 50px;
-      .header__info-phone,
-      .footer__text {
-        display: block;
-        color: #fff;
-        font-size: 18px;
-        text-align: left;
-        font-weight: 400;
-        font-size: 16px;
-        margin-bottom: 10px;
-        opacity: 0.6;
-        cursor: pointer;
-      }
-    }
-
-    &-link {
-      text-align: left;
-      font-size: 13px;
-      line-height: 15px;
-      font-weight: 500;
-      color: #262626;
-      opacity: 0.6;
-      text-decoration: none;
-      transition: all 0.2s;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
-  }
-
-  &__info {
-    display: flex;
-    align-items: center;
-
-    &-phone {
-      text-decoration: none;
-      text-align: right;
-      font-size: 13px;
-      font-weight: 500;
-      line-height: 15px;
-      letter-spacing: 1.3px;
-      color: #262626;
-      margin-right: 10px;
-      transition: all 0.2s;
-      @include respond-to(sm) {
-        display: none;
-      }
-
-      &:hover {
-        color: #720c0c;
-      }
-    }
-  }
+.mobilenav.mobnavactive {
+  right: 0;
+  transition: all 0.4s;
+}
+.hidden {
+  visibility: hidden;
 }
 
-@include respond-to(md) {
-  .header__menu {
-    position: fixed;
-    top: 80px;
-    background: #3c3c3c;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 24px;
-    transition: all 0.3s;
-    transform: translateX(100%);
-    flex-wrap: wrap;
-    display: block;
-    .header__menu-item {
-      width: 100%;
-      margin-bottom: 20px;
-    }
-    .header__menu-link {
-      font-size: 16px;
-      font-weight: normal;
-      color: #fff;
-    }
-  }
+/* remove blue outline */
+button:focus {
+  outline: 0;
 }
 
-.open-modal-menu {
-  overflow: hidden;
-  .header__menu {
-    transform: translate(0);
-  }
+.burger-button {
+  position: relative;
+  height: 30px;
+  width: 32px;
+  display: block;
+  z-index: 999;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  pointer-events: all;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-.header__info {
-  cursor: pointer;
+
+.burger-bar {
+  background-color: #130f40;
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  left: 6px;
+  height: 2px;
+  width: auto;
+  margin-top: -1px;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1),
+    opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1),
+    background-color 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.burger-bar--1 {
+  -webkit-transform: translateY(-6px);
+  transform: translateY(-6px);
+}
+
+.burger-bar--2 {
+  transform-origin: 100% 50%;
+  transform: scaleX(0.8);
+}
+
+.burger-button:hover .burger-bar--2 {
+  transform: scaleX(1);
+}
+
+.no-touchevents .burger-bar--2:hover {
+  transform: scaleX(1);
+}
+
+.burger-bar--3 {
+  transform: translateY(6px);
+}
+
+#burger.active .burger-button {
+  transform: rotate(-180deg);
+}
+
+#burger.active .burger-bar {
+  background-color: rgb(0, 0, 0);
+}
+
+#burger.active .burger-bar--1 {
+  transform: rotate(45deg);
+}
+
+#burger.active .burger-bar--2 {
+  opacity: 0;
+}
+
+#burger.active .burger-bar--3 {
+  transform: rotate(-45deg);
 }
 </style>

@@ -1,21 +1,18 @@
 <template>
-  <div class="page contacts"></div>
+  <div></div>
 </template>
 
 <script>
-export default {
-    created(){
-        let body = document.querySelector('body');
-        body.classList.toggle('contacts');
-    }
-}
+export default {};
 </script>
 
-<style lang="scss">
-.contacts{
-.footer__button-top{
-        display: none;
-    }
+<style lang="scss" scoped>
+.footer-parallax {
+  top: 0 !important;
 }
-
+.contacts {
+  .footer__button-top {
+    display: none;
+  }
+}
 </style>

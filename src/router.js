@@ -34,15 +34,15 @@ let router = new Router({
       component: Detail,
     },
     {
-      path: '/detail-1',
+      path: '/detail1',
       component: Detail1,
     },
     {
-      path: '/detail-2',
+      path: '/detail2',
       component: Detail2,
     },
     {
-      path: '/detail-3',
+      path: '/detail3',
       component: Detail3,
     },
   ],

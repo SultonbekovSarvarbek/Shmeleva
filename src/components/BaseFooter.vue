@@ -1,43 +1,49 @@
 <template>
-  <footer class="footer footer-parallax">
-    <div class="row no-gutters">
-      <div class="col col-4 col-md-4 col-lg-4 col-xl-4">
-        <div class="footer__wrap">
-          <div class="footer__info">
-            <div class="footer__item">
-              <Icon name="advantage-1" />
+  <div>
+    <modal v-if="activeModal" @clicked="closeModal" />
 
-              <div class="footer__phone">8 (800) 000-00-00</div>
+    <footer class="footer footer-parallax">
+      <div class="footer__wrapper">
+        <div class="footer__info">
+          <div class="footer__item-wrapper">
+            <div class="footer__item">
+              <!-- <Icon name="advantage-1" /> -->
+
+              <div class="footer__phone">84 951 288 882</div>
+              <div class="footer__phone">896 713 914 445</div>
             </div>
             <div class="footer__item">
-              <Icon name="advantage-1" />
+              <!-- <Icon name="advantage-1" /> -->
 
               <div class="footer__text">
                 г. Москва, наб. канала Грибоедова, д. 41
               </div>
             </div>
             <div class="footer__item">
-              <Icon name="advantage-1" />
+              <!-- <Icon name="advantage-1" /> -->
 
-              <div class="footer__text">info@lawer.com</div>
+              <div class="footer__text">ShmelevyLaw@gmail.com</div>
+            </div>
+            <div class="footer__item">
+              <button
+                class="banner-main__button footer__btn"
+                @click="openModal"
+              >
+                ЗАЯВКА НА БЕСПЛАТНУЮ КОНСУЛЬТАЦИЮ
+              </button>
             </div>
 
-            <div class="footer__button" @click="$modal.show('application')">
+            <!-- <div class="footer__button" @click="$modal.show('application')">
               <Button variation="primary" width="full" type="a"
                 >ЗАЯВКА НА БЕСПЛАТНУЮ КОНСУЛЬТАЦИЮ</Button
               >
-            </div>
+            </div> -->
 
             <div class="footer__copyright">
               Copyright © ООО «Company» 2018г. Не является публичной офертой
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="col col-8 col-md-8 col-lg-8 col-xl-8"
-        v-if="windowWidth > 992"
-      >
         <div class="footer__map">
           <yandex-map
             class="footer__map-map"
@@ -50,17 +56,20 @@
           ></yandex-map>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
 </template>
 
 <script>
-import Button from "@/components/Button.vue";
-import Icon from "@/components/Icon/Icon.vue";
+// import Button from "@/components/Button.vue";
+// import Icon from "@/components/Icon/Icon.vue";
 import { yandexMap } from "vue-yandex-maps";
+import modal from "../components/modal";
+
 export default {
   data() {
     return {
+      activeModal: false,
       coords: [55.753215, 37.622504],
       settings: {
         apiKey: "",
@@ -71,43 +80,60 @@ export default {
     };
   },
   mounted() {
-    var div = document.querySelector("footer");
-    console.log("Высота блока " + div.offsetHeight);
-    let body = document.querySelector("body");
-    body.style.marginBottom = "" + div.offsetHeight + "px";
+    // var div = document.querySelector("footer");
+    // let body = document.querySelector("body");
+    // body.style.marginBottom = "" + div.offsetHeight + "px";
+  },
+  methods: {
+    openModal() {
+      this.activeModal = true;
+    },
+    closeModal(val) {
+      this.activeModal = val;
+    },
+    // onClickChild(val) {
+    //   this.activeModal = val;
+    // },
   },
   components: {
-    Button,
+    modal,
+    // Button,
     yandexMap,
-    Icon,
+    // Icon,
   },
 };
 </script>
 
-<style lang="scss">
-@import "~assets/scss/config";
-@import "~assets/scss/mixins";
-@include respond-to(sm) {
-  body {
-    margin-bottom: 0 !important;
-  }
-}
+<style lang="scss" >
 .footer {
-  height: 100vh;
-  background: #212121 0% 0% no-repeat padding-box;
-  position: relative;
-  @include respond-to(lg) {
-    height: 500px;
+  height: 800px;
+  &-parallax {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+
+    z-index: -1;
   }
-  @include respond-to(sm) {
-    height: auto;
+  &__item-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
   }
-  @include respond-to(md) {
-    .col {
-      max-width: 100%;
-      width: 100%;
-      flex: 100%;
-    }
+  &__wrapper {
+    display: flex;
+    height: 100%;
+  }
+  &__info {
+    color: #fff;
+    width: 40%;
+    background: #212121;
+    padding: 2rem;
+  }
+  &__map {
+    width: 60%;
   }
   &__button {
     &-top {
@@ -129,106 +155,44 @@ export default {
       justify-content: center;
       border: 1px solid transparent;
       transition: all 0.2s;
+
       &:hover {
         border: 1px solid #720c0c;
       }
     }
   }
-  .row {
-    height: 100%;
-  }
   &__map {
     height: 100%;
-    @include respond-to(md) {
-    }
     &-map {
       height: 100%;
       opacity: 0.9;
       filter: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'><filter id='grayscale'><feColorMatrix type='matrix' values='0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0'/></filter></svg>#grayscale");
       -webkit-filter: grayscale(100%);
       filter: grayscale(100%);
-      @include respond-to(md) {
-        height: 350px;
-      }
     }
   }
-  &__info {
-    width: 360px;
-    margin: auto;
-    padding-top: 35px;
-    margin-bottom: 0;
-    @include respond-to(lg) {
-      padding: 0 24px;
-    }
-    @include respond-to(sm) {
-      padding: 0;
-      width: 100%;
-    }
-  }
-  &__item {
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    .icon {
-      margin-right: 12px;
-    }
-  }
-  &__text {
-    text-align: left;
-    font-size: 12px;
-    line-height: 21px;
-    font-weight: 400;
-    color: #ffffff;
-  }
-  &__button {
-    margin-top: 35px;
-    @include respond-to(sm) {
-      overflow: hidden;
-    }
+  &__item:not(:last-child) {
+    margin-bottom: 1.2rem;
   }
   &__phone {
-    font-size: 18px;
-    line-height: 32px;
     font-weight: 500;
-    letter-spacing: 0px;
-    color: #ffffff;
-  }
-  &__wrap {
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    @include respond-to(md) {
-      padding: 40px;
-    }
-    @include respond-to(sm) {
-      padding: 40px;
-    }
+    font-size: 1.2rem;
+    letter-spacing: 0.2rem;
   }
   &__copyright {
-    font-size: 10px;
-    line-height: 12px;
     font-weight: 400;
-    letter-spacing: 0px;
-    color: #ffffff;
-    opacity: 0.7;
-    margin-top: 35px;
-    margin-bottom: 41px;
-    @include respond-to(md) {
-      margin-bottom: 0;
-    }
+    color: #474747;
+    font-size: 0.8rem;
   }
 }
-.footer-parallax {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: -1;
-}
-@media screen and (max-width: 767px) {
-  .footer-parallax {
-    position: static;
+@media (max-width: 1000px) {
+  .footer {
+    &__info {
+      width: 100%;
+    }
+    &__map {
+      display: none;
+    }
   }
 }
 </style>

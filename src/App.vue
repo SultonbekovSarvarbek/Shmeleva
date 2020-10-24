@@ -1,6 +1,6 @@
 <template>
-  <div id="app" sticky-container>
-    <div class="preloader" :class="[{ show: loading }]">
+  <div id="app">
+    <!-- <div class="preloader" :class="[{ show: loading }]">
       <div class="container-fluid">
         <div class="spinner">
           <span class="ball-1"></span>
@@ -9,70 +9,21 @@
           <span class="ball-4"></span>
         </div>
       </div>
+    </div> -->
+    <BaseHeader />
+    <div style="margin-top: 86px">
+      <router-view />
     </div>
-    <BaseHeader v-sticky />
-    <router-view />
     <BaseFooter />
-    <modal
-      name="application"
-      :width="windowWidth < 992 ? '310' : '480'"
-      height="auto"
-      scrollable
-      class="modal modal-application"
-    >
-      <div class="modal__close" @click="$modal.hide('application')">X</div>
-      <h2 class="modal__title">Заявка на бесплатную консультацию</h2>
-      <div class="modal__wrap">
-        <form action="" class="modal__form">
-          <div class="modal__form-item">
-            <div class="input">
-              <input type="text" placeholder="ФИО" />
-            </div>
-          </div>
-          <div class="modal__form-item">
-            <div class="input">
-              <input type="text" placeholder="Номер телефона" />
-            </div>
-          </div>
-          <div class="modal__form-item">
-            <div class="input">
-              <input type="text" placeholder="Электронная почта" />
-            </div>
-          </div>
-          <div class="modal__form-item">
-            <div class="input">
-              <textarea
-                placeholder="Коротко опишите ситуацию с которой Вам нужна помощь"
-              />
-            </div>
-          </div>
-          <div class="modal__form-item">
-            <input
-              type="checkbox"
-              class="custom-checkbox"
-              id="happy"
-              name="happy"
-              value="yes"
-            />
-            <label for="happy"
-              >даю согласие на обработку <br />
-              персональных данных</label
-            >
-          </div>
-          <div class="modal__form-button">
-            <Button variation="primary" width="full" type="a">Отправить</Button>
-          </div>
-        </form>
-      </div>
-    </modal>
   </div>
 </template>
 
 <script>
-import Button from "@/components/Button.vue";
+// import Button from "@/components/Button.vue";
 
 import BaseHeader from "./components/BaseHeader.vue";
 import BaseFooter from "./components/BaseFooter.vue";
+
 export default {
   name: "App",
   data() {
@@ -83,7 +34,7 @@ export default {
   components: {
     BaseHeader,
     BaseFooter,
-    Button,
+    // Button,
   },
 
   methods: {
@@ -98,28 +49,69 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~assets/scss/config";
-@import "~assets/scss/mixins";
+// @import "~assets/scss/config";
+// @import "~assets/scss/mixins";
 @import "~assets/scss/reset";
-@import "~assets/libs/bootstrap/bootstrap-grid";
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&display=swap");
+@import "~assets/scss/normalize";
+// @import "~assets/libs/bootstrap/bootstrap-grid";
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;1,300&display=swap");
 
 html {
   min-height: 100%;
 }
 
-body {
-  font-family: "Rubik", sans-serif;
+body,
+html {
+  font-family: "Montserrat", sans-serif;
 
   font-size: 16px;
   line-height: 24px;
   color: #000;
 }
-.v--modal {
-  padding: 1rem !important;
-}
-.modal__title {
+
+.banner-main__button {
+  display: inline-block;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-weight: bold;
   margin: 0;
+  text-decoration: none;
+  background: #fff;
+  color: #720c0c;
+  font-family: sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: center;
+  &:focus {
+    outline: none;
+  }
+}
+.button {
+  display: inline-flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: none;
+  vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 33px;
+  font-weight: 500;
+  transition: all 0.3s;
+  padding: 0 20px;
+  height: 48px;
+  text-align: center;
+  white-space: nowrap;
+  background: #fff 0 0 no-repeat padding-box;
+  color: #720c0c;
+  justify-content: center;
+}
+.footer__btn {
+  background-color: #720c0c;
+  color: #fff;
 }
 .preloader {
   width: 100%;
@@ -139,7 +131,11 @@ body {
     visibility: visible;
   }
 }
-
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px 0 15px;
+}
 .preloader .container-fluid {
   padding-left: 0;
   padding-right: 0;
@@ -301,139 +297,5 @@ body {
     transform: translate(50%, 50%) scale(0.5);
     z-index: -1;
   }
-}
-
-.modal.v--modal-overlay {
-  background: hsla(0, 81%, 25%, 0.3) 0% 0% no-repeat padding-box;
-}
-
-.v--modal {
-  overflow: visible !important;
-  padding: 1rem 0;
-  @include respond-to(sm) {
-    // padding: 24px 0 !important;
-  }
-}
-.v--modal {
-  // padding: 1rem 0;
-}
-.modal {
-  &__wrap {
-    // padding: 0 72px;
-    @include respond-to(sm) {
-      //   padding: 0 10px;
-    }
-  }
-  &__title {
-    text-align: center;
-    font-size: 16px;
-    line-height: 26px;
-    font-weight: 500;
-    color: #720c0c;
-    opacity: 1;
-    margin-bottom: 28px;
-  }
-  &__form {
-    &-item {
-      margin-bottom: 24px;
-    }
-  }
-  &__close {
-    background: #720c0c 0% 0% no-repeat padding-box;
-    opacity: 1;
-    width: 48px;
-    cursor: pointer;
-    height: 48px;
-    border-radius: 50%;
-    position: absolute;
-    right: -24px;
-    top: -24px;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-}
-
-.input {
-  input,
-  textarea {
-    background: #f5f5f5 0% 0% no-repeat padding-box;
-    border-radius: 10px;
-    opacity: 1;
-    height: 48px;
-    border: none;
-    width: 100%;
-    padding-right: 24px;
-    padding-left: 24px;
-    resize: none;
-    outline: none;
-    border: 1px solid transparent;
-    &:hover {
-      border: 1px solid #720c0c;
-    }
-  }
-  textarea {
-    height: auto;
-    padding: 24px;
-  }
-}
-.custom-checkbox {
-  position: absolute;
-  z-index: -1;
-  opacity: 0;
-}
-.custom-checkbox + label {
-  display: inline-flex;
-  align-items: center;
-  user-select: none;
-  text-align: left;
-  font-size: 12px;
-  line-height: 18px;
-  font-weight: 400;
-  letter-spacing: 0px;
-  color: #969696;
-  opacity: 1;
-}
-.custom-checkbox + label::before {
-  content: "";
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  flex-grow: 0;
-  border: 1px solid #adb5bd;
-  border-radius: 0.25em;
-  margin-right: 0.5em;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50% 50%;
-  margin-right: 10px;
-}
-.custom-checkbox:checked + label::before {
-  border-color: #720c0c;
-  background-color: #720c0c;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
-}
-/* стили при наведении курсора на checkbox */
-.custom-checkbox:not(:disabled):not(:checked) + label:hover::before {
-  border-color: #b3d7ff;
-}
-/* стили для активного состояния чекбокса (при нажатии на него) */
-.custom-checkbox:not(:disabled):active + label::before {
-  background-color: #b3d7ff;
-  border-color: #b3d7ff;
-}
-/* стили для чекбокса, находящегося в фокусе */
-.custom-checkbox:focus + label::before {
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-/* стили для чекбокса, находящегося в фокусе и не находящегося в состоянии checked */
-.custom-checkbox:focus:not(:checked) + label::before {
-  border-color: #80bdff;
-}
-/* стили для чекбокса, находящегося в состоянии disabled */
-.custom-checkbox:disabled + label::before {
-  background-color: #e9ecef;
 }
 </style>
