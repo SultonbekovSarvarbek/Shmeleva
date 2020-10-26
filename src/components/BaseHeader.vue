@@ -37,7 +37,7 @@
         </li> -->
         </ul>
         <div class="header__info">
-          <p>84 951 288 882</p>
+          <p>+7 (495) 128 88 82</p>
           <span>
             <Icon name="telephone" />
           </span>

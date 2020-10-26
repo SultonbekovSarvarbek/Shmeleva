@@ -9,8 +9,8 @@
             <div class="footer__item">
               <!-- <Icon name="advantage-1" /> -->
 
-              <div class="footer__phone">84 951 288 882</div>
-              <div class="footer__phone">896 713 914 445</div>
+              <div class="footer__phone">+7 (495) 128 88 82</div>
+              <div class="footer__phone">+7 (967) 139 14 45</div>
             </div>
             <div class="footer__item">
               <!-- <Icon name="advantage-1" /> -->
