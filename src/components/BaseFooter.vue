@@ -1,5 +1,11 @@
 <template>
   <div>
+    <div v-if="thanks" class="message__overlay"></div>
+
+    <div v-if="thanks" class="thanks__message">
+      <p>Спасибо, ваша заявка принята!</p>
+      <p>Мы свяжемся с вами в ближайшее время.</p>
+    </div>
     <modal v-if="activeModal" @clicked="closeModal" />
 
     <footer class="footer footer-parallax">
@@ -69,6 +75,7 @@ import modal from "../components/modal";
 export default {
   data() {
     return {
+      thanks: false,
       activeModal: false,
       coords: [55.753215, 37.622504],
       settings: {
@@ -85,11 +92,19 @@ export default {
     // body.style.marginBottom = "" + div.offsetHeight + "px";
   },
   methods: {
+    sendbtn() {
+      this.activeModal = false;
+      this.thanks = true;
+      setTimeout(() => {
+        this.thanks = false;
+      }, 2000);
+    },
     openModal() {
       this.activeModal = true;
     },
-    closeModal(val) {
-      this.activeModal = val;
+    closeModal() {
+      // console.log(val);
+      this.activeModal = false;
     },
     // onClickChild(val) {
     //   this.activeModal = val;

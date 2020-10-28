@@ -4,43 +4,60 @@
     <div class="modal">
       <div class="modal-content">
         <h2 class="modal__title">Заявка на бесплатную консультацию</h2>
-        <form action="" class="modal__form">
-          <div class="modal__form-item">
-            <div class="input">
-              <input type="text" placeholder="ФИО" />
-            </div>
+
+        <form v-on:submit.prevent="send" class="modal__form">
+          <div v-if="thanks" class="thanks__message">
+            <p>Спасибо, ваша заявка принята!</p>
+            <p>Мы свяжемся с вами в ближайшее время.</p>
           </div>
-          <div class="modal__form-item">
-            <div class="input">
-              <input type="text" placeholder="Номер телефона" />
+          <div v-else>
+            <div class="modal__form-item">
+              <div class="input">
+                <input type="text" v-model="full_name" placeholder="ФИО" />
+              </div>
             </div>
-          </div>
-          <div class="modal__form-item">
-            <div class="input">
-              <input type="text" placeholder="Электронная почта" />
+            <div class="modal__form-item">
+              <div class="input">
+                <input
+                  type="text"
+                  v-model="phone_number"
+                  placeholder="Номер телефона"
+                />
+              </div>
             </div>
-          </div>
-          <div class="modal__form-item">
-            <div class="input">
-              <textarea
-                placeholder="Коротко опишите ситуацию с которой Вам нужна помощь"
+            <div class="modal__form-item">
+              <div class="input">
+                <input
+                  type="text"
+                  v-model="email"
+                  placeholder="Электронная почта"
+                />
+              </div>
+            </div>
+            <div class="modal__form-item">
+              <div class="input">
+                <textarea
+                  v-model="message"
+                  placeholder="Коротко опишите ситуацию с которой Вам нужна помощь"
+                />
+              </div>
+            </div>
+            <div class="modal__form-item">
+              <input
+                type="checkbox"
+                class="custom-checkbox"
+                id="happy"
+                name="happy"
+                value="yes"
               />
+
+              <label for="happy"
+                >Даю согласие на обработку персональных данных</label
+              >
             </div>
-          </div>
-          <div class="modal__form-item">
-            <input
-              type="checkbox"
-              class="custom-checkbox"
-              id="happy"
-              name="happy"
-              value="yes"
-            />
-            <label for="happy"
-              >Даю согласие на обработку персональных данных</label
-            >
-          </div>
-          <div class="modal__form-button">
-            <button class="button button-full">Отправить</button>
+            <div class="modal__form-button">
+              <button class="button button-full">Отправить</button>
+            </div>
           </div>
         </form>
       </div>
@@ -52,13 +69,60 @@
 </template>
 
 <script>
+const axios = require("axios");
+
 export default {
   data() {
-    return {};
+    return {
+      thanks: false,
+      token: "1080699344:AAGqfkSWhcqzJH8384rSU7u8RdjO0sB-mS4",
+      chatID: "-476234828",
+      full_name: "",
+      phone_number: "",
+      email: "",
+      message: "",
+      data: null,
+      data2: "",
+      data3: "",
+    };
   },
+  computed: {},
   methods: {
     closeModal() {
       this.$emit("clicked", false);
+    },
+
+    async send() {
+      var keys = ["ФИО", "Номер телефона", "Электронная почта", "Ситуация"];
+      var values = [
+        this.full_name,
+        this.phone_number,
+        this.email,
+        this.message,
+      ];
+      var obj = {};
+      for (var i = 0; i < keys.length; i++) {
+        obj[keys[i]] = values[i];
+      }
+      for (var key of Object.keys(obj)) {
+        this.data3 = this.data3 + key + ": " + obj[key] + "%0A";
+      }
+      await axios
+        .post(
+          "https://api.telegram.org/bot1080699344:AAGqfkSWhcqzJH8384rSU7u8RdjO0sB-mS4/sendMessage?chat_id=-476234828&parse_mode=html&text=" +
+            this.data3
+        )
+        .then(() => {
+          // this.$emit("clicked", "message");
+          this.thanks = true;
+          // setTimeout(() => {
+          //   this.thanks = false;
+          // }, 2000);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        });
     },
   },
 };

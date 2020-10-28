@@ -298,4 +298,18 @@ html {
     z-index: -1;
   }
 }
+.thanks__message {
+  text-align: center;
+}
+.message__overlay {
+  position: fixed;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 29;
+  background-color: rgba(31, 0, 0, 0.714);
+}
 </style>

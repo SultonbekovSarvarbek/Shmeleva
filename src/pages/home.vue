@@ -163,6 +163,7 @@ import modal from "../components/modal";
 export default {
   data() {
     return {
+      thanks: false,
       modalactive: false,
       activeModal: false,
       modalOpen: false,
@@ -232,7 +233,13 @@ export default {
       this.activeModal = true;
     },
     closeModal(val) {
-      this.activeModal = val;
+      this.activeModal = false;
+      if (val == "message") {
+        this.thanks = true;
+        setTimeout(() => {
+          this.thanks = false;
+        }, 4000);
+      }
     },
     scrollTop() {
       this.intervalId = setInterval(() => {

@@ -4,6 +4,7 @@ import router from './router';
 // import vmodal from 'vue-js-modal';
 // import Sticky from 'vue-sticky-directive';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
+
 // import VueAnimate from 'vue-animate-scroll';
 // import VueScrollTo from 'vue-scrollto';
 // import VueWindowSize from 'vue-window-size';
